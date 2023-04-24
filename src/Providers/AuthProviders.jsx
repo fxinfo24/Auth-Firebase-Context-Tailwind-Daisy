@@ -11,11 +11,15 @@ const UserInfo = { displayName: "Xander Xone", email: "xander@xone.com" };
 const AuthProviders = ({ children }) => {
     const [user, setUser] = useState(null)
 
+    // Set Loader state
+    const [loader, setLoader] = useState(true)
+
     // Observe auth state changes
     useEffect( () => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             console.log('Auth state changed to ', currentUser);
             setUser(currentUser)
+            setLoader(false)
         })
         return () => {
             unsubscribe();
@@ -41,7 +45,8 @@ const AuthProviders = ({ children }) => {
         user,
         createUser,
         signInUser,
-        logOutUser
+        logOutUser,
+        loader
     }
   return (
     <div>
